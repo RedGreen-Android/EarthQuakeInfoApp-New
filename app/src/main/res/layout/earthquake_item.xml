@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <data>
+        <import type="android.view.View"/>
+
+        <variable
+            name="earthquake"
+            type="com.example.earthquakeinfoapp.data.model.Earthquake" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/carditem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onListClick"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cardCornerRadius="10dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="2dp"
+        app:cardElevation="6dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:clipToPadding="true"
+        android:background="@drawable/gradient_custom"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gradient_custom"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:id="@+id/tv_magnitude"
+                android:text="@{earthquake.magnitude >= 8.00 ? @string/magnitude_high_text(earthquake.magnitude) : @string/magnitude_text(earthquake.magnitude)}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Styles.Earth.magnitude"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:gravity="center"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                tools:text="EarthQuake Magnitude: 8.8"/>
+
+            <TextView
+                android:id="@+id/tv_depth"
+                android:text="@{@string/depth_text(earthquake.depth)}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Styles.Earth.depth"
+                app:layout_constraintStart_toStartOf="@+id/tv_magnitude"
+                app:layout_constraintTop_toBottomOf="@id/tv_magnitude"
+                android:paddingTop="3dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="15dp"
+                tools:text="Depth: 24.4" />
+
+            <TextView
+                android:id="@+id/tv_datetime"
+                android:text="@{earthquake.datetime}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Styles.Earth.date"
+                app:layout_constraintTop_toBottomOf="@id/tv_depth"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:paddingBottom="5dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                tools:text="2011-03-11 04:46:23"
+                android:visibility="@{safeUnbox(earthquake.magnitude >= 8.00)? View.GONE : View.VISIBLE}"
+                android:layout_marginLeft="16dp" />
+
+            <TextView
+                android:id="@+id/tv_alert_datetime"
+                android:text="@{earthquake.datetime}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Styles.Earth.highalertdate"
+                app:layout_constraintTop_toBottomOf="@id/tv_depth"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:padding="5dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:background="@drawable/high_alert_gradient"
+                tools:text="2011-03-11 04:46:23"
+                android:visibility="@{safeUnbox(earthquake.magnitude >= 8.00)? View.VISIBLE : View.GONE}"
+                android:layout_marginLeft="16dp" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</layout>

@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">EarthquakeInfoApp</string>
+
+    <!-- EarthQuake Item strings-->
+
+    <string name="magnitude_text">EarthQuake Magnitude: %.2f%n</string>
+    <string name="magnitude_high_text">High Alert Magnitude: %.2f%n</string>
+    <string name="depth_text">Depth: %.2f%n</string>
+
+</resources>
