@@ -16,11 +16,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MyClickListener {
 
     private val earthquakeViewModel: EarthquakeViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
     lateinit var earthquakeAdapter: EarthquakeAdapter
+    val earthquakeList : ArrayList<Earthquake> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,14 +34,14 @@ class MainActivity : AppCompatActivity() {
 
     fun setupUI() {
         binding.recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
-        earthquakeAdapter = EarthquakeAdapter(arrayListOf())
+        earthquakeAdapter = EarthquakeAdapter(arrayListOf(),this)
         binding.recyclerView.adapter = earthquakeAdapter
     }
 
-    fun onListClick(view: View){
-        val intent = Intent(this, EarthquakeMapActivity::class.java)
-        startActivity(intent)
-    }
+//    fun onListClick(view: View){
+//        val intent = Intent(this, EarthquakeMapActivity::class.java)
+//        startActivity(intent)
+//    }
 
     fun setupObserver(){
         earthquakeViewModel.getEarthQuake(true, 44.1, -9.9, -22.4, 55.2, "mkoppelman")
@@ -50,12 +51,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun retrieveEmployeeList(users: List<Earthquake>) {
+        earthquakeList.addAll(users)
         earthquakeAdapter.apply {
             addUsers(users)
             notifyDataSetChanged()
         }
+    }
 
+    override fun myItemClick(position: Int) {
+        if (earthquakeList.size> position){
+            val model = earthquakeList.get(position)
+            val bundle = Bundle()
+            bundle.putParcelable("key", model)
+            val intent = Intent(this, EarthquakeMapActivity::class.java)
+            intent.putExtras(bundle)
+            startActivity(intent)
+        }
+    }
 }
 
+interface MyClickListener{
+    fun myItemClick(position: Int)
 
 }

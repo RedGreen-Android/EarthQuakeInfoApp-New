@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class EarthquakeViewModel @Inject constructor(private val repository: EarthquakeRepository) : ViewModel() {
 
-//    val mapEarthquake: MutableLiveData<Double> = MutableLiveData()
+    val mapEarthquake: MutableLiveData<Earthquake> = MutableLiveData()
 
     private val _earthQuake: MutableLiveData<List<Earthquake>> = MutableLiveData()
     val earthQuake: LiveData<List<Earthquake>> = _earthQuake
@@ -23,11 +23,8 @@ class EarthquakeViewModel @Inject constructor(private val repository: Earthquake
         viewModelScope.launch {
             val response = repository.getEarthquakes(formatted, north, south, east, west, username)
             _earthQuake.value = response
+            mapEarthquake.value = response[0]
         }
     }
-
-//    fun onEarthquakeClick() {
-//        mapEarthquake.postValue(earthquake.lat)
-//    }
 
 }

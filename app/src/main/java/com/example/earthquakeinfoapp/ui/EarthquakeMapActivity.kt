@@ -1,23 +1,30 @@
 package com.example.earthquakeinfoapp.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import com.example.earthquakeinfoapp.R
 import com.example.earthquakeinfoapp.data.model.Earthquake
 import com.example.earthquakeinfoapp.databinding.ActivityEarthquakeMapBinding
+import com.example.earthquakeinfoapp.ui.viewmodel.EarthquakeViewModel
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_earthquake_map.*
 
 @AndroidEntryPoint
 class EarthquakeMapActivity : AppCompatActivity() {
 
+    private val earthquakeViewModel: EarthquakeViewModel by viewModels()
+
     lateinit var mapFragment: SupportMapFragment
     lateinit var googleMap: GoogleMap
-    val earth = Earthquake("123", 20.0, 34.2,12.1,41.2)
-
 
     private lateinit var earthquakeMapBinding: ActivityEarthquakeMapBinding
 
@@ -30,8 +37,20 @@ class EarthquakeMapActivity : AppCompatActivity() {
         mapFragment.getMapAsync {
             googleMap = it
 
-            val location: LatLng = LatLng(earth.lat, earth.lng) //using default values
+            earthquakeViewModel.getEarthQuake(true, 44.1, -9.9, -22.4, 55.2, "mkoppelman")
+            var getLocation : Earthquake = intent.extras?.getParcelable("key")!!
+            var location = LatLng(getLocation.lat, getLocation.lng)
+            Log.d("position", location.toString())
             googleMap.addMarker(MarkerOptions().position(location).title("EarthQuake location"))
+            //   googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, DEFAULT_))
+
+
+//            earthquakeViewModel.mapEarthquake.observe(this, Observer {
+//                var location = LatLng(response.lat, response.lng) //using default values
+//                Log.d("try", location.toString())
+//                googleMap.addMarker(MarkerOptions().position(location).title("EarthQuake location"))
+//              })
+
         }
 
     }
