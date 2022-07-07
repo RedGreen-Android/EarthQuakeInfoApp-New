@@ -4,5 +4,5 @@
 ## Tech stack - Kotlin, MVVM viewmodel, Live Data, HILT for dependency Injection, databinding, viewbinding, Retrofit, Coroutines, styles refactored  
 Author: Ridwan Fahim
 
-![earthgithub1](https://user-images.githubusercontent.com/83381250/177684558-1f50c424-f385-40d2-abf7-491e5c63a188.png)
+![earthgithub1](https://user-images.githubusercontent.com/83381250/177684823-84ed7e45-48d9-4d99-8a5d-2d726a167ba9.png)
 ![earthgithub2](https://user-images.githubusercontent.com/83381250/177684157-56d2d77d-824c-4dcd-86d1-08d034fdde8c.png)
