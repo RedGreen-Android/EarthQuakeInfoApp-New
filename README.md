@@ -1,7 +1,7 @@
 # EarthQuake Info App 
 ### List of earthquakes in custom recyclerview with Magnitude ≥ 8 (high alert) differentiated. Google map screen with location/marker of each eartquake is prompted when clicked on any on the list 
 ### Productive level following Repository pattern MVVM architecture with lot of abstraction
-## Tech stack - Kotlin, MVVM viewmodel, Live Data, HILT for dependency Injection, databinding, viewbinding, Retrofit, Coroutines, styles refactored  
+## Tech stack - Kotlin, MVVM viewmodel, Live Data, HILT for dependency Injection, databinding, viewbinding, Coroutines, Retrofit, States/Error states, styles refactored  
 Author: Ridwan Fahim
 
 ![earthgithub1](https://user-images.githubusercontent.com/83381250/177684823-84ed7e45-48d9-4d99-8a5d-2d726a167ba9.png)
