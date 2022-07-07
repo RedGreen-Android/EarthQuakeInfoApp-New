@@ -1,30 +1,28 @@
 package com.example.earthquakeinfoapp.ui.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.earthquakeinfoapp.R
 import com.example.earthquakeinfoapp.data.model.Earthquake
 import com.example.earthquakeinfoapp.data.repository.EarthquakeRepository
+import com.example.earthquakeinfoapp.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class EarthquakeViewModel @Inject constructor(private val repository: EarthquakeRepository) : ViewModel() {
 
-    val mapEarthquake: MutableLiveData<Earthquake> = MutableLiveData()
+//    private val _earthQuake: MutableLiveData<List<Earthquake>> = MutableLiveData()
+//    val earthQuake: LiveData<List<Earthquake>> = _earthQuake
 
-    private val _earthQuake: MutableLiveData<List<Earthquake>> = MutableLiveData()
-    val earthQuake: LiveData<List<Earthquake>> = _earthQuake
-
-    fun getEarthQuake(formatted: Boolean, north: Double, south: Double, east: Double, west: Double, username: String){
-        viewModelScope.launch {
-            val response = repository.getEarthquakes(formatted, north, south, east, west, username)
-            _earthQuake.value = response
-            mapEarthquake.value = response[0]
+    fun getEarthQuake(formatted: Boolean, north: Double, south: Double, east: Double, west: Double, username: String) =
+        liveData {
+            emit(Resource.loading(data = null))
+            try {
+                emit(Resource.success(repository.getEarthquakes(formatted, north, south, east, west, username)))
+            } catch (exception : Exception) {
+                emit(Resource.error(data = null, message = exception.message?: "Error"))
+            }
         }
-    }
-
 }
